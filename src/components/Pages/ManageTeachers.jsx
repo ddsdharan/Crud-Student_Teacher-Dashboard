@@ -27,7 +27,7 @@ const ManageTeachers = ({
 
   const addTeacher = async () => {
     try {
-      const resp = await axios.post(
+      await axios.post(
         'https://655c86bf25b76d9884fd77be.mockapi.io/crud_TS/teachers',
         teacherFormData,
       )
@@ -39,7 +39,7 @@ const ManageTeachers = ({
 
   const updateTeacher = async () => {
     try {
-      const resp = await axios.put(
+      await axios.put(
         `https://655c86bf25b76d9884fd77be.mockapi.io/crud_TS/teachers/${teacherFormData.id}`,
         teacherFormData,
       )

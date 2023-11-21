@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import Footer from '../Helpers/Footer';
 
 const Teachers = ({
@@ -9,35 +9,34 @@ const Teachers = ({
   setTeacherData,
   teacherHandleSelected,
 }) => {
-  const getTeacherData = async () => {
+  const getTeacherData = useCallback(async () => {
     try {
       const resp = await axios.get(
         'https://655c86bf25b76d9884fd77be.mockapi.io/crud_TS/teachers',
-      )
-
-      setTeacherData(resp.data)
+      );
+      setTeacherData(resp.data);
     } catch (err) {
       // Handle Error Here
-      console.error(err)
+      console.error(err);
     }
-  }
+  }, [setTeacherData]);
 
   const handleDelete = async (id) => {
     try {
-      const resp = await axios.delete(
+      await axios.delete(
         `https://655c86bf25b76d9884fd77be.mockapi.io/crud_TS/teachers/${id}`,
-      )
-
-      setTeacherData(teacherData.filter((row) => row.id !== id))
+      );
+      setTeacherData(teacherData.filter((row) => row.id !== id));
     } catch (err) {
       // Handle Error Here
-      console.error(err)
+      console.error(err);
     }
-  }
+  };
 
   useEffect(() => {
-    getTeacherData()
-  }, [])
+    getTeacherData();
+  }, [getTeacherData]);
+
   return (
     <div>
       <div
@@ -48,7 +47,12 @@ const Teachers = ({
         <div className="container">
           <h1>List of Teachers</h1>
           <p>
-          As a teacher, your role in a student’s life goes beyond providing a great education. You’re a leader, role model, coach, advisor and facilitator of positive growth. Since students spend so much of their time in your classroom, it’s up to you and your fellow educators to make school a positive and inspiring environment where children can do their best work and be their best selves.
+            As a teacher, your role in a student’s life goes beyond providing a
+            great education. You’re a leader, role model, coach, advisor, and
+            facilitator of positive growth. Since students spend so much of
+            their time in your classroom, it’s up to you and your fellow
+            educators to make school a positive and inspiring environment where
+            children can do their best work and be their best selves.
           </p>
 
           <div className="table-responsive">
@@ -96,7 +100,7 @@ const Teachers = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Teachers
+export default Teachers;
